@@ -23,20 +23,27 @@ class Home extends Component {
                   listening: false,
                   loading: false,
                   title:"",
-                  mic:true 
+                  mic:true,
+                  search:"" 
                   
               };
     
     this.changeColor = this.changeColor.bind(this);
   }
   componentDidMount () {
+
+    this.fetchResults();
+  }
+
+  
+fetchResults = ()=> {
     const url = 'https://jsonplaceholder.typicode.com/todos/';
     this.setState({loading:true});
     // in axios access data with .data
     axios.get(url)
       .then(response => {
         this.setState({
-          title: response.data[0].title,
+          title: response.data[1].title,
           
 
         });
@@ -50,6 +57,7 @@ class Home extends Component {
   changeListening(){
     this.setState({listening: true});
   }
+  
   changeMic(){
     this.setState({mic: false});
   }
@@ -79,6 +87,10 @@ class Home extends Component {
     
   
   }
+  handleClick3 = (e) => {
+
+    setTimeout(() => {this.fetchResults()}, 10000);
+  }
   handleClick2 = (e) => {
 
     setTimeout(() => {
@@ -92,7 +104,19 @@ class Home extends Component {
    
   }, 10000);
 }
-  
+
+// search(e) {
+//   const query = e.target.querySelector(
+//     'input[type="text"]').value;
+    
+//   let newSearch = query == this.state.search;
+//   this.setState({search: newSearch});
+// }
+makeSearch(e){
+  const query = e.target.querySelector('input[type="text"]').value;
+  this.setState({search: query});
+}
+
 
  
  
@@ -109,7 +133,7 @@ class Home extends Component {
               listening={this.state.listening}/>
           <p className="pl" >{this.state.listening}Listening </p> 
           <p className="pl">{transcript} {this.state.listening} 
-            <input className="input"  value={transcript}/>
+            <input className="input" type="text" value={transcript}/>
           </p>
          
         </div>
@@ -126,6 +150,7 @@ class Home extends Component {
           display={this.state.display}
         />
         <p className="p" >Searching For</p>
+        {/* <p className="pn"  onChange={this.makeSearch} > </p> */}
         <p className="pn" >{transcript}</p>
         </div>
 
