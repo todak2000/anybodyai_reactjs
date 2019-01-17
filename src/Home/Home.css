@@ -86,9 +86,17 @@
     text-align: center;
     color: #fff;
   }
+  input{
 
+    color: #fff;
+    line-height: 1.2;
+    display: block;
+    border:0;
+
+    background-color: transparent;
+  }
   .display{
-    width:50%;
+    width:60%;
     min-height: 100vh;
     height:100%;
     position: absolute;
@@ -103,7 +111,7 @@
   }
   .spinner{
     position: fixed;
-    top:90%;
+    top:80%;
     left:25%;
   }
   .mic{

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import logo from '../Home/mic.svg';
 import ReactLoading  from 'react-loading';
+import SpeechRecognition from 'react-speech-recognition';
 // import ReactTimeout from 'react-timeout'
 import Loader from '../Loader/Loader';
 import axios from 'axios';
@@ -96,17 +97,21 @@ class Home extends Component {
  
  
   render() {
-    
+      const { transcript, resetTranscript, browserSupportsSpeechRecognition } = this.props
       const Listen = (
-        <div className="liste"> 
-        <ReactLoading 
-        type={"bars"} 
-        color={"#fff"} 
-        height={'30%'} 
-        width={'30%'} 
-        className="loader"
-        listening={this.state.listening}/>
-        <p className="pl" >{this.state.listening}Listening </p> 
+        <div className="liste">{this.state.listening} 
+          <ReactLoading 
+              type={"bars"} 
+              color={"#fff"} 
+              height={'30%'} 
+              width={'30%'} 
+              className="loader"
+              listening={this.state.listening}/>
+          <p className="pl" >{this.state.listening}Listening </p> 
+          <p className="pl">{transcript} {this.state.listening} 
+            <input className="input"  value={transcript}/>
+          </p>
+         
         </div>
       );
       const notListen =(
@@ -121,7 +126,7 @@ class Home extends Component {
           display={this.state.display}
         />
         <p className="p" >Searching For</p>
-        <p className="pn" >Adeola Hassan</p>
+        <p className="pn" >{transcript}</p>
         </div>
 
       );
@@ -148,7 +153,7 @@ class Home extends Component {
 
       const pulsate = (
         <div className="mic" onClick = {()=>{this.changeColor();this.changeDisplay();this.changeMic();this.changeListening();this.handleClick();this.handleClick2();this.changeDisplay2()}} style={{backgroundColor:this.state.color}}>
-            <img src={logo} className="App-logo" alt="logo" />
+            <img src={logo} className="App-logo" alt="logo" onClick={resetTranscript} />
         </div>
       );
       const notPulsate =(
@@ -165,9 +170,6 @@ class Home extends Component {
       {/* {this.state.display2 ? Display : notDisplay} */}
             <div className="circle">
                 <a>
-                  {/* <div className="mic" onClick = {()=>{this.changeColor();this.changeDisplay();this.changeListening();this.handleClick();this.handleClick2();this.changeDisplay2()}} style={{backgroundColor:this.state.color}}>
-                    <img src={logo} className="App-logo" alt="logo" />
-                  </div> */}
                   {
                     this.state.mic ? pulsate : notPulsate
                   }
@@ -192,5 +194,6 @@ class Home extends Component {
   }
 }
 
-export default Home;
+// export default Home;
+export default SpeechRecognition(Home);
 // export default ReactTimeout(Home);
